@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff00ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#aa00ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Outer shield light pink -->
+  <path d="M512 50 L850 250 L850 550 Q850 800 512 950 Q174 800 174 550 L174 250 Z" fill="#ff66ff" stroke="none"/>
+  <!-- Inner shield dark purple -->
+  <path d="M512 120 L780 280 L780 520 Q780 720 512 850 Q244 720 244 520 L244 280 Z" fill="#bb00ff" stroke="none"/>
+  <!-- Circle background white -->
+  <circle cx="512" cy="520" r="180" fill="white"/>
+  <!-- Circle background dark purple -->
+  <circle cx="512" cy="520" r="150" fill="#7700aa"/>
+  <!-- Checkmark white -->
+  <g stroke="white" stroke-width="40" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="380,520 480,620 650,420"/>
+  </g>
+</svg>

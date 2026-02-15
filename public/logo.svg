@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer shield glow -->
+  <filter id="glow">
+    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+    <feMerge>
+      <feMergeNode in="coloredBlur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  
+  <!-- Main shield -->
+  <path d="M 100 20 L 160 50 L 160 100 Q 160 150 100 180 Q 40 150 40 100 L 40 50 Z" 
+        fill="url(#shieldGrad)" filter="url(#glow)"/>
+  
+  <!-- Inner accent shield -->
+  <path d="M 100 35 L 145 60 L 145 100 Q 145 140 100 165 Q 55 140 55 100 L 55 60 Z" 
+        fill="url(#accentGrad)" opacity="0.3"/>
+  
+  <!-- Checkmark circle background -->
+  <circle cx="100" cy="95" r="45" fill="white" opacity="0.95"/>
+  
+  <!-- Checkmark -->
+  <g stroke="#0284c7" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="75,95 90,110 125,75"/>
+  </g>
+  
+  <!-- Decorative dots -->
+  <circle cx="65" cy="50" r="3" fill="#06b6d4" opacity="0.6"/>
+  <circle cx="135" cy="55" r="3" fill="#06b6d4" opacity="0.6"/>
+  <circle cx="70" cy="140" r="2.5" fill="#06b6d4" opacity="0.4"/>
+  <circle cx="130" cy="135" r="2.5" fill="#06b6d4" opacity="0.4"/>
+</svg>
