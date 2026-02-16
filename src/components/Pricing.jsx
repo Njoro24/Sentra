@@ -1,5 +1,5 @@
 import React from 'react'
-import { Check } from 'lucide-react'
+import { Check, ArrowRight } from 'lucide-react'
 
 export default function Pricing() {
   const plans = [
@@ -55,12 +55,12 @@ export default function Pricing() {
   ]
 
   return (
-    <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800">
+    <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 border-t border-indigo-500/10 relative">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
+        <div className="text-center mb-16 space-y-4">
+          <h2 className="text-4xl sm:text-5xl font-bold">
+            <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               Simple, Transparent Pricing
             </span>
           </h2>
@@ -70,78 +70,80 @@ export default function Pricing() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 auto-rows-max pt-8">
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative p-8 rounded-lg border transition-all duration-300 hover:shadow-lg hover:shadow-sky-500/20 ${
+              className={`group relative overflow-visible rounded-xl border transition-all duration-300 hover:scale-105 flex flex-col ${
                 plan.highlighted
-                  ? 'bg-gradient-to-br from-sky-500/10 to-blue-600/10 border-sky-500/50 shadow-lg shadow-sky-500/20 transform md:scale-105 hover:scale-110'
-                  : 'bg-slate-800/50 border-slate-700 hover:border-sky-500/50 hover:bg-slate-800/80 hover:shadow-lg hover:shadow-sky-500/20'
+                  ? 'bg-gradient-to-br from-indigo-500/20 to-purple-600/20 border-indigo-500/50 shadow-2xl shadow-indigo-500/30 md:scale-105 pt-8'
+                  : 'bg-slate-800/30 border-indigo-500/20 hover:border-indigo-500/50 hover:bg-slate-800/50'
               }`}
             >
+              {/* Hover gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+
               {/* Badge */}
               {plan.highlighted && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="px-4 py-1 bg-gradient-to-r from-sky-500 to-blue-600 text-white text-sm font-semibold rounded-full">
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 z-20">
+                  <span className="px-4 py-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-semibold rounded-full shadow-lg shadow-indigo-500/50 whitespace-nowrap">
                     Most Popular
                   </span>
                 </div>
               )}
 
-              {/* Plan Name */}
-              <h3 className="text-2xl font-bold text-white mb-2">
-                {plan.name}
-              </h3>
-              <p className="text-slate-400 text-sm mb-6">
-                {plan.description}
-              </p>
+              {/* Content */}
+              <div className="relative z-10 p-8 flex flex-col h-full">
+                {/* Plan Name */}
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-white group-hover:text-indigo-300 transition-colors">
+                    {plan.name}
+                  </h3>
+                  <p className="text-slate-400 text-sm mt-2">
+                    {plan.description}
+                  </p>
+                </div>
 
-              {/* Price */}
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-white">
-                  {plan.price}
-                </span>
-                <span className="text-slate-400 text-sm ml-2">
-                  {plan.period}
-                </span>
-              </div>
+                {/* Price */}
+                <div className="py-6 border-y border-indigo-500/20 mb-6">
+                  <span className="text-5xl font-bold text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text">
+                    {plan.price}
+                  </span>
+                  <span className="text-slate-400 text-sm ml-2">
+                    {plan.period}
+                  </span>
+                </div>
 
+                {/* Features */}
+                <div className="space-y-3 mb-8 flex-grow">
+                  {plan.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-start gap-3 group/item">
+                      <Check size={20} className="text-indigo-400 flex-shrink-0 mt-0.5 group-hover/item:scale-125 transition-transform" />
+                      <span className="text-slate-300 text-sm group-hover/item:text-slate-200 transition-colors">
+                        {feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
 
-
-              {/* Features */}
-              <div className="space-y-4">
-                {plan.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <Check size={20} className="text-sky-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-300 text-sm">
-                      {feature}
-                    </span>
-                  </div>
-                ))}
+                {/* CTA Button */}
+                <button className="w-full px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-indigo-500/50 transition-all flex items-center justify-center gap-2 group/btn border-none cursor-pointer mt-auto">
+                  {plan.cta}
+                  <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
+                </button>
               </div>
             </div>
           ))}
         </div>
 
-        {/* FAQ Note */}
-        <div className="mt-16 text-center">
+        {/* Footer Note */}
+        <div className="mt-16 text-center space-y-4">
           <p className="text-slate-400">
             All plans include 30-day free trial. No credit card required.
           </p>
-        </div>
-
-        {/* Get Started Button */}
-        <div className="mt-12 text-center">
-          <button
-            onClick={() => {
-              const element = document.getElementById('contact')
-              if (element) element.scrollIntoView({ behavior: 'smooth' })
-            }}
-            className="px-8 py-4 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-sky-500/50 transition-all cursor-pointer border-none"
-          >
-            Get Started
-          </button>
+          <p className="text-sm text-slate-500">
+            Need a custom plan? <span className="text-indigo-400 cursor-pointer hover:text-indigo-300 transition-colors">Contact our sales team</span>
+          </p>
         </div>
       </div>
     </section>
