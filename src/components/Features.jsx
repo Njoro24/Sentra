@@ -42,18 +42,43 @@ export default function Features() {
   ]
 
   return (
-    <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 border-t border-indigo-500/10 relative">
+    <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl sm:text-5xl font-bold">
-            <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Powerful Features
-            </span>
+          <h2 className="text-4xl sm:text-5xl font-bold text-white" style={{ fontFamily: 'Syne' }}>
+            Powerful Features
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+          <p className="text-white/70 text-lg max-w-2xl mx-auto">
             Everything you need to detect and prevent fraud at scale
           </p>
+        </div>
+
+        {/* Marquee Section */}
+        <div className="mb-12 py-8 overflow-hidden w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-white/5 border-y border-white/10">
+          <style>{`
+            @keyframes marquee {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .marquee-track {
+              animation: marquee 35s linear infinite;
+              display: flex;
+              gap: 120px;
+              white-space: nowrap;
+            }
+            .marquee-track:hover {
+              animation-play-state: paused;
+            }
+          `}</style>
+          <div className="marquee-track px-4">
+            <div className="text-base text-white/70 flex-shrink-0" style={{ fontFamily: 'Syne', letterSpacing: '2px', fontWeight: '600' }}>
+              Connect <b className="text-[#7ab8f5] mx-8 font-normal">✦</b> Score <b className="text-[#7ab8f5] mx-8 font-normal">✦</b> Decide <b className="text-[#7ab8f5] mx-8 font-normal">✦</b> Monitor
+            </div>
+            <div className="text-base text-white/70 flex-shrink-0" style={{ fontFamily: 'Syne', letterSpacing: '2px', fontWeight: '600' }}>
+              Connect <b className="text-[#7ab8f5] mx-8 font-normal">✦</b> Score <b className="text-[#7ab8f5] mx-8 font-normal">✦</b> Decide <b className="text-[#7ab8f5] mx-8 font-normal">✦</b> Monitor
+            </div>
+          </div>
         </div>
 
         {/* Features Grid */}
@@ -71,13 +96,8 @@ export default function Features() {
 
                 {/* Content */}
                 <div className="relative z-10 space-y-4">
-                  {/* Icon */}
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${feature.color} p-3 group-hover:scale-125 group-hover:shadow-lg group-hover:shadow-indigo-500/50 transition-all duration-300`}>
-                    <Icon size={24} className="text-white" />
-                  </div>
-
                   {/* Title */}
-                  <h3 className="text-xl font-bold text-white group-hover:text-indigo-300 transition-colors">
+                  <h3 className="text-xl font-bold text-white group-hover:text-indigo-300 transition-colors" style={{ fontFamily: 'Syne' }}>
                     {feature.title}
                   </h3>
 

@@ -9,7 +9,6 @@ export default function Contact() {
     institution: '',
     message: ''
   })
-
   const [submitted, setSubmitted] = useState(false)
 
   const handleChange = (e) => {
@@ -22,26 +21,26 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData)
     setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({ name: '', email: '', phone: '', institution: '', message: '' })
-    }, 3000)
+    setTimeout(() => setSubmitted(false), 3000)
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      institution: '',
+      message: ''
+    })
   }
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 border-t border-slate-800">
+    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 relative">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
-              Get In Touch
-            </span>
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-white" style={{ fontFamily: 'Syne' }}>
+            Get In Touch
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+          <p className="text-white/70 text-lg max-w-2xl mx-auto">
             Ready to protect your institution? Contact us today.
           </p>
         </div>
@@ -51,12 +50,12 @@ export default function Contact() {
           <div className="space-y-8">
             {/* Email */}
             <div className="flex gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Mail size={24} className="text-white" />
+              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+                <Mail size={24} className="text-[#0f4db5]" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white mb-1">Email</h3>
-                <a href="mailto:meshacknjorogeg@gmail.com" className="text-sky-400 hover:text-sky-300 transition-colors">
+                <h3 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'Syne' }}>Email</h3>
+                <a href="mailto:meshacknjorogeg@gmail.com" className="text-white/70 hover:text-white transition-colors">
                   meshacknjorogeg@gmail.com
                 </a>
               </div>
@@ -64,12 +63,12 @@ export default function Contact() {
 
             {/* Phone */}
             <div className="flex gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Phone size={24} className="text-white" />
+              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+                <Phone size={24} className="text-[#0f4db5]" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white mb-1">Phone</h3>
-                <a href="tel:+254798779172" className="text-sky-400 hover:text-sky-300 transition-colors">
+                <h3 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'Syne' }}>Phone</h3>
+                <a href="tel:+254798779172" className="text-white/70 hover:text-white transition-colors">
                   +254 798 779 172
                 </a>
               </div>
@@ -77,27 +76,27 @@ export default function Contact() {
 
             {/* Location */}
             <div className="flex gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <MapPin size={24} className="text-white" />
+              <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+                <MapPin size={24} className="text-[#0f4db5]" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white mb-1">Location</h3>
-                <p className="text-slate-400">
+                <h3 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'Syne' }}>Location</h3>
+                <p className="text-white/70">
                   Nairobi, Kenya
                 </p>
               </div>
             </div>
 
             {/* Response Time */}
-            <div className="p-4 bg-sky-500/10 border border-sky-500/30 rounded-lg">
-              <p className="text-sky-300 text-sm">
+            <div className="p-4 bg-white/10 border border-white/20 rounded-lg">
+              <p className="text-white text-sm">
                 <span className="font-semibold">Response Time:</span> We typically respond within 2 hours during business hours.
               </p>
             </div>
           </div>
 
           {/* Contact Form */}
-          <div className="p-8 bg-slate-800/50 border border-slate-700 rounded-lg">
+          <div className="p-8 bg-white/10 border border-white/20 rounded-lg shadow-lg shadow-white/10">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name */}
               <div>
@@ -110,7 +109,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:border-white focus:outline-none transition-colors"
                   placeholder="Your name"
                 />
               </div>
@@ -126,7 +125,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:border-white focus:outline-none transition-colors"
                   placeholder="your@email.com"
                 />
               </div>
@@ -141,7 +140,7 @@ export default function Contact() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:border-white focus:outline-none transition-colors"
                   placeholder="+254..."
                 />
               </div>
@@ -156,7 +155,7 @@ export default function Contact() {
                   name="institution"
                   value={formData.institution}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:border-white focus:outline-none transition-colors"
                   placeholder="Your bank or SACCO"
                 />
               </div>
@@ -172,7 +171,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows="4"
-                  className="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none transition-colors resize-none"
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 focus:border-white focus:outline-none transition-colors resize-none"
                   placeholder="Tell us about your fraud detection needs..."
                 ></textarea>
               </div>
@@ -180,7 +179,7 @@ export default function Contact() {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-sky-500/50 transition-all flex items-center justify-center gap-2 group cursor-pointer border-none"
+                className="w-full px-6 py-3 bg-white text-[#0f4db5] rounded-lg font-semibold hover:shadow-lg hover:shadow-white/50 transition-all flex items-center justify-center gap-2 group cursor-pointer border-none hover:bg-white/90"
               >
                 Send Message
                 <Send size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -188,8 +187,8 @@ export default function Contact() {
 
               {/* Success Message */}
               {submitted && (
-                <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
-                  <p className="text-green-300 text-sm">
+                <div className="p-4 bg-green-500/20 border border-green-500/50 rounded-lg">
+                  <p className="text-green-200 text-sm">
                     ✓ Message sent successfully! We'll be in touch soon.
                   </p>
                 </div>
