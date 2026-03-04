@@ -91,29 +91,88 @@ class APIClient {
   // AUTHENTICATION
   // ─────────────────────────────────────────────────────────────────────────
 
-  async register(name, email, password, subscriptionTier = 'starter') {
-    const data = await this.request('/auth/register', {
+  async register(institutionName, email, phoneNumber, password, confirmPassword) {
+    return this.request('/auth/register', {
       method: 'POST',
       body: JSON.stringify({
-        name,
+        institution_name: institutionName,
+        email,
+        phone_number: phoneNumber,
+        password,
+        confirm_password: confirmPassword
+      })
+    });
+  }
+
+  async login(email, password, rememberDevice = false, deviceName = null) {
+    return this.request('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({
         email,
         password,
-        subscription_tier: subscriptionTier
+        remember_device: rememberDevice,
+        device_name: deviceName
+      })
+    });
+  }
+
+  async verifyOTP(clientId, otpCode, otpType) {
+    const data = await this.request('/auth/verify-otp', {
+      method: 'POST',
+      body: JSON.stringify({
+        client_id: clientId,
+        otp_code: otpCode,
+        otp_type: otpType
       })
     });
 
-    this.setToken(data.access_token);
+    if (data.access_token) {
+      this.setToken(data.access_token);
+    }
     return data;
   }
 
-  async login(email, password) {
-    const data = await this.request('/auth/login', {
+  async trustDevice(clientId, deviceName) {
+    return this.request('/auth/trust-device', {
       method: 'POST',
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({
+        client_id: clientId,
+        device_name: deviceName
+      })
     });
+  }
 
-    this.setToken(data.access_token);
-    return data;
+  async forgotPassword(email) {
+    return this.request('/auth/forgot-password', {
+      method: 'POST',
+      body: JSON.stringify({ email })
+    });
+  }
+
+  async resetPassword(clientId, otpCode, newPassword, confirmPassword) {
+    return this.request('/auth/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({
+        client_id: clientId,
+        otp_code: otpCode,
+        new_password: newPassword,
+        confirm_password: confirmPassword
+      })
+    });
+  }
+
+  async checkPasswordStrength(password) {
+    return this.request('/auth/check-password-strength', {
+      method: 'POST',
+      body: JSON.stringify({ password })
+    });
+  }
+
+  async validatePhone(phoneNumber) {
+    return this.request('/auth/validate-phone', {
+      method: 'POST',
+      body: JSON.stringify({ phone_number: phoneNumber })
+    });
   }
 
   async getCurrentUser() {
