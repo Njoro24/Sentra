@@ -25,9 +25,9 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Product</h4>
             <ul className="space-y-2 text-sm text-blue-200/60">
-              <li><Link to="/about" className="hover:text-[#7ab8f5] transition-colors">Features</Link></li>
-              <li><a href="/#pricing" className="hover:text-[#7ab8f5] transition-colors cursor-pointer">Pricing</a></li>
-              <li><a href="/#how-it-works" className="hover:text-[#7ab8f5] transition-colors cursor-pointer">How It Works</a></li>
+              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Features</a></li>
+              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Pricing</a></li>
+              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">How It Works</a></li>
               <li><Link to="/docs" className="hover:text-[#7ab8f5] transition-colors">Documentation</Link></li>
             </ul>
           </div>
@@ -37,9 +37,9 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-sm text-blue-200/60">
               <li><Link to="/about" className="hover:text-[#7ab8f5] transition-colors">About Us</Link></li>
-              <li><a href="/#" className="hover:text-[#7ab8f5] transition-colors cursor-pointer">Blog</a></li>
+              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Blog</a></li>
               <li><Link to="/careers" className="hover:text-[#7ab8f5] transition-colors">Careers</Link></li>
-              <li><a href="/#contact" className="hover:text-[#7ab8f5] transition-colors cursor-pointer">Contact</a></li>
+              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Contact</a></li>
             </ul>
           </div>
 
@@ -47,10 +47,10 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm text-blue-200/60">
-              <li><a href="/#" className="hover:text-[#7ab8f5] transition-colors cursor-pointer">Privacy Policy</a></li>
-              <li><a href="/#" className="hover:text-[#7ab8f5] transition-colors cursor-pointer">Terms of Service</a></li>
-              <li><a href="/#" className="hover:text-[#7ab8f5] transition-colors cursor-pointer">Security</a></li>
-              <li><a href="/#" className="hover:text-[#7ab8f5] transition-colors cursor-pointer">Compliance</a></li>
+              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Privacy Policy</a></li>
+              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Terms of Service</a></li>
+              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Security</a></li>
+              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Compliance</a></li>
             </ul>
           </div>
         </div>
