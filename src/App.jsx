@@ -14,6 +14,9 @@ import About from './pages/About'
 import Documentation from './pages/Documentation'
 import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
+import ClientRegister from './pages/ClientRegister'
+import ClientLogin from './pages/ClientLogin'
+import ForgotPassword from './pages/ForgotPassword'
 
 function Home() {
   const [scrollY, setScrollY] = useState(0)
@@ -58,6 +61,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/register" element={<ClientRegister />} />
+      <Route path="/login" element={<ClientLogin />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/docs" element={<Documentation />} />
       <Route path="/admin-dashboard" element={
