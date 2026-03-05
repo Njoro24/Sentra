@@ -1,103 +1,171 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Mail, Phone, Github, Linkedin, Twitter } from 'lucide-react'
+import React from "react"
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Instagram,
+  Twitter,
+  Linkedin,
+  Globe,
+} from "lucide-react"
+import { FooterBackgroundGradient, TextHoverEffect } from "@/components/ui/hover-footer"
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
+  const footerLinks = [
+    {
+      title: "Product",
+      links: [
+        { label: "Features", href: "#" },
+        { label: "Pricing", href: "#pricing" },
+        { label: "Security", href: "#" },
+        { label: "API Docs", href: "#" },
+      ],
+    },
+    {
+      title: "Company",
+      links: [
+        { label: "About Us", href: "#" },
+        { label: "Blog", href: "#" },
+        { label: "Careers", href: "#" },
+        { label: "Contact", href: "#" },
+      ],
+    },
+    {
+      title: "Resources",
+      links: [
+        { label: "Documentation", href: "#" },
+        { label: "Support", href: "#" },
+        { label: "FAQ", href: "#" },
+        { label: "Status", href: "#" },
+      ],
+    },
+    {
+      title: "Legal",
+      links: [
+        { label: "Privacy Policy", href: "#" },
+        { label: "Terms of Service", href: "#" },
+        { label: "Cookie Policy", href: "#" },
+        { label: "Compliance", href: "#" },
+      ],
+    },
+  ]
+
+  const contactInfo = [
+    {
+      icon: <Mail size={18} className="text-blue-400" />,
+      text: "support@sentra.io",
+      href: "mailto:support@sentra.io",
+    },
+    {
+      icon: <Phone size={18} className="text-blue-400" />,
+      text: "+254 798 779 172",
+      href: "tel:+254798779172",
+    },
+    {
+      icon: <MapPin size={18} className="text-blue-400" />,
+      text: "Nairobi, Kenya",
+    },
+  ]
+
+  const socialLinks = [
+    { icon: <Facebook size={20} />, label: "Facebook", href: "#" },
+    { icon: <Instagram size={20} />, label: "Instagram", href: "#" },
+    { icon: <Twitter size={20} />, label: "Twitter", href: "#" },
+    { icon: <Linkedin size={20} />, label: "LinkedIn", href: "#" },
+    { icon: <Globe size={20} />, label: "Website", href: "#" },
+  ]
 
   return (
-    <footer className="border-t border-blue-200/30" style={{ background: 'linear-gradient(135deg, #071e52 0%, #0f4db5 55%, #2277ee 100%)' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Main Footer Content */}
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <img src="/logo.svg" alt="Sentra" className="w-8 h-8" />
-              <span className="text-lg font-bold text-white" style={{ fontFamily: 'Syne' }}>Sentra</span>
+    <footer className="bg-[#0F0F11]/10 relative h-fit overflow-hidden w-full">
+      <div className="max-w-full mx-auto p-14 z-40 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 md:gap-8 lg:gap-12 pb-12">
+          {/* Brand section */}
+          <div className="flex flex-col space-y-4">
+            <div className="flex items-center space-x-2">
+              <img src="/logo.svg" alt="Sentra" className="w-10 h-10" />
+              <span className="text-white text-3xl font-bold" style={{ fontFamily: 'Syne' }}>Sentra</span>
             </div>
-            <p className="text-blue-200/60 text-sm">
-              Intelligent fraud detection platform.
+            <p className="text-sm text-white/70 leading-relaxed">
+              Intelligent fraud detection platform protecting financial institutions in real-time.
             </p>
           </div>
 
-          {/* Product */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Product</h4>
-            <ul className="space-y-2 text-sm text-blue-200/60">
-              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Features</a></li>
-              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Pricing</a></li>
-              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">How It Works</a></li>
-              <li><Link to="/docs" className="hover:text-[#7ab8f5] transition-colors">Documentation</Link></li>
-            </ul>
-          </div>
+          {/* Footer link sections */}
+          {footerLinks.map((section) => (
+            <div key={section.title}>
+              <h4 className="text-white text-lg font-semibold mb-6">
+                {section.title}
+              </h4>
+              <ul className="space-y-3">
+                {section.links.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="text-white/70 hover:text-blue-400 transition-colors text-sm"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
-          {/* Company */}
+          {/* Contact section */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Company</h4>
-            <ul className="space-y-2 text-sm text-blue-200/60">
-              <li><Link to="/about" className="hover:text-[#7ab8f5] transition-colors">About Us</Link></li>
-              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Blog</a></li>
-              <li><Link to="/careers" className="hover:text-[#7ab8f5] transition-colors">Careers</Link></li>
-              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Contact</a></li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm text-blue-200/60">
-              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Privacy Policy</a></li>
-              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Terms of Service</a></li>
-              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Security</a></li>
-              <li><a href="/" className="hover:text-[#7ab8f5] transition-colors">Compliance</a></li>
+            <h4 className="text-white text-lg font-semibold mb-6">Contact</h4>
+            <ul className="space-y-4">
+              {contactInfo.map((item, i) => (
+                <li key={i} className="flex items-center space-x-3">
+                  {item.icon}
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      className="text-white/70 hover:text-blue-400 transition-colors text-sm"
+                    >
+                      {item.text}
+                    </a>
+                  ) : (
+                    <span className="text-white/70 text-sm">{item.text}</span>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-blue-200/20 py-8">
-          {/* Contact Info */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
-            <div className="flex flex-col sm:flex-row gap-6 text-sm text-blue-200/60">
-              <div className="flex items-center gap-2">
-                <span>📍 Nairobi, Kenya</span>
-              </div>
-              <a href="mailto:meshacknjorogeg@gmail.com" className="flex items-center gap-2 hover:text-[#7ab8f5] transition-colors">
-                <Mail size={16} />
-                meshacknjorogeg@gmail.com
-              </a>
-              <a href="tel:+254798779172" className="flex items-center gap-2 hover:text-[#7ab8f5] transition-colors">
-                <Phone size={16} />
-                +254 798 779 172
-              </a>
-            </div>
+        <hr className="border-t border-white/10 my-8" />
 
-            {/* Social Links */}
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-200/60 hover:text-[#7ab8f5] hover:bg-blue-500/40 transition-all">
-                <Github size={18} />
+        {/* Footer bottom */}
+        <div className="flex flex-col md:flex-row justify-between items-center text-sm space-y-4 md:space-y-0">
+          {/* Social icons */}
+          <div className="flex space-x-6 text-white/60">
+            {socialLinks.map(({ icon, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="hover:text-blue-400 transition-colors"
+              >
+                {icon}
               </a>
-              <a href="#" className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-200/60 hover:text-[#7ab8f5] hover:bg-blue-500/40 transition-all">
-                <Linkedin size={18} />
-              </a>
-              <a href="#" className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-200/60 hover:text-[#7ab8f5] hover:bg-blue-500/40 transition-all">
-                <Twitter size={18} />
-              </a>
-            </div>
+            ))}
           </div>
 
-          {/* Bottom */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-blue-200/40">
-            <p>
-              © {currentYear} Sentra. All rights reserved.
-            </p>
-            <p>
-              Intelligent fraud detection platform
-            </p>
-          </div>
+          {/* Copyright */}
+          <p className="text-center md:text-left text-white/60">
+            &copy; {new Date().getFullYear()} Sentra. All rights reserved.
+          </p>
         </div>
       </div>
+
+      {/* Text hover effect */}
+      <div className="lg:flex hidden h-[20rem] -mt-40 -mb-20 justify-center items-center">
+        <TextHoverEffect text="Sentra" className="z-50 scale-50" />
+      </div>
+
+      <FooterBackgroundGradient />
     </footer>
   )
 }

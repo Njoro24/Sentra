@@ -3,15 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, Check, X, AlertCircle } from 'lucide-react'
 import { api } from '../services/api'
 
-const COUNTRIES = [
-  { name: 'Kenya', code: 'KE', dial: '+254' },
-  { name: 'Uganda', code: 'UG', dial: '+256' },
-  { name: 'Tanzania', code: 'TZ', dial: '+255' },
-  { name: 'Rwanda', code: 'RW', dial: '+250' },
-  { name: 'Ethiopia', code: 'ET', dial: '+251' },
-  { name: 'South Sudan', code: 'SS', dial: '+211' },
-]
-
 export default function ClientRegister() {
   const navigate = useNavigate()
   const [step, setStep] = useState('register') // register, verify
@@ -19,13 +10,12 @@ export default function ClientRegister() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [clientId, setClientId] = useState(null)
+  const [userEmail, setUserEmail] = useState('')
 
   // Form state
   const [formData, setFormData] = useState({
     institution_name: '',
     email: '',
-    country: 'KE',
-    phone_number: '',
     password: '',
     confirm_password: ''
   })
@@ -45,16 +35,9 @@ export default function ClientRegister() {
 
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
-  const [phoneValid, setPhoneValid] = useState(null)
 
-  // Get selected country
-  const selectedCountry = COUNTRIES.find(c => c.code === formData.country)
-
-  // OTP state
-  const [otpData, setOtpData] = useState({
-    email_otp: '',
-    phone_otp: ''
-  })
+  // OTP state - only email OTP
+  const [emailOtp, setEmailOtp] = useState('')
   const [otpLoading, setOtpLoading] = useState(false)
 
   // Check password strength
@@ -64,34 +47,12 @@ export default function ClientRegister() {
     }
   }, [formData.password])
 
-  // Validate phone number
-  useEffect(() => {
-    if (formData.phone_number) {
-      validatePhone(formData.phone_number)
-    }
-  }, [formData.phone_number, formData.country])
-
   const checkPasswordStrength = async (password) => {
     try {
       const response = await api.checkPasswordStrength(password)
       setPasswordStrength(response)
     } catch (err) {
       console.error('Password strength check failed:', err)
-    }
-  }
-
-  const validatePhone = async (phone) => {
-    try {
-      // Simple validation: phone should be 9-10 digits
-      const phoneDigits = phone.replace(/\D/g, '')
-      if (phoneDigits.length >= 9 && phoneDigits.length <= 10) {
-        setPhoneValid(true)
-      } else {
-        setPhoneValid(false)
-      }
-    } catch (err) {
-      console.error('Phone validation failed:', err)
-      setPhoneValid(false)
     }
   }
 
@@ -117,12 +78,6 @@ export default function ClientRegister() {
       if (!formData.email.trim()) {
         throw new Error('Email is required')
       }
-      if (!formData.phone_number.trim()) {
-        throw new Error('Phone number is required')
-      }
-      if (!phoneValid) {
-        throw new Error('Invalid phone number format')
-      }
       if (formData.password !== formData.confirm_password) {
         throw new Error('Passwords do not match')
       }
@@ -133,16 +88,25 @@ export default function ClientRegister() {
       const response = await api.register(
         formData.institution_name,
         formData.email,
-        `${selectedCountry.dial}${formData.phone_number.replace(/\D/g, '')}`,
         formData.password,
         formData.confirm_password
       )
       
       setClientId(response.client_id)
+      setUserEmail(formData.email)
       setStep('verify')
-      setSuccess('Registration successful! Please verify your email and phone number.')
+      setSuccess('Registration successful! Check your email for the verification code.')
     } catch (err) {
-      setError(err.response?.data?.detail || err.message)
+      const message = err.response?.data?.detail || err.message
+      
+      // If already registered, redirect to login
+      if (message.toLowerCase().includes('already registered')) {
+        setError('This email is already registered. Redirecting to login...')
+        setTimeout(() => navigate('/login'), 2000)
+        return
+      }
+      
+      setError(message)
     } finally {
       setLoading(false)
     }
@@ -154,20 +118,23 @@ export default function ClientRegister() {
     setError('')
 
     try {
-      if (!otpData.email_otp || !otpData.phone_otp) {
-        throw new Error('Please enter both OTP codes')
+      if (!emailOtp) {
+        throw new Error('Please enter the OTP code')
       }
 
       // Verify email OTP
-      await api.verifyOTP(clientId, otpData.email_otp, 'registration')
+      const response = await api.verifyOTP(clientId, emailOtp, 'registration')
 
-      // Verify phone OTP
-      await api.verifyOTP(clientId, otpData.phone_otp, 'registration')
+      // Store the access token from registration
+      if (response.access_token) {
+        localStorage.setItem('access_token', response.access_token)
+        localStorage.setItem('token_type', response.token_type)
+      }
 
-      setSuccess('Email and phone verified successfully!')
+      setSuccess('Email verified successfully! Redirecting to dashboard...')
       setTimeout(() => {
-        navigate('/login')
-      }, 2000)
+        navigate('/dashboard')
+      }, 1500)
     } catch (err) {
       setError(err.response?.data?.detail || err.message)
     } finally {
@@ -254,54 +221,6 @@ export default function ClientRegister() {
                   />
                 </div>
 
-                {/* Country and Phone Number */}
-                <div className="grid grid-cols-3 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-300 mb-2">
-                      Country
-                    </label>
-                    <select
-                      name="country"
-                      value={formData.country}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition"
-                    >
-                      {COUNTRIES.map(country => (
-                        <option key={country.code} value={country.code}>
-                          {country.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="col-span-2">
-                    <label className="block text-sm font-medium text-slate-300 mb-2">
-                      Phone Number
-                    </label>
-                    <div className="relative flex">
-                      <span className="px-3 py-2 bg-slate-700 border border-slate-600 border-r-0 rounded-l-lg text-slate-400 flex items-center">
-                        {selectedCountry?.dial}
-                      </span>
-                      <input
-                        type="tel"
-                        name="phone_number"
-                        value={formData.phone_number}
-                        onChange={handleInputChange}
-                        placeholder="712345678"
-                        className="flex-1 px-4 py-2 bg-slate-700 border border-slate-600 rounded-r-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition"
-                      />
-                      {formData.phone_number && (
-                        <div className="absolute right-3 top-2.5">
-                          {phoneValid ? (
-                            <Check className="w-5 h-5 text-green-400" />
-                          ) : (
-                            <X className="w-5 h-5 text-red-400" />
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
                 {/* Password */}
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
@@ -313,6 +232,9 @@ export default function ClientRegister() {
                       name="password"
                       value={formData.password}
                       onChange={handleInputChange}
+                      onCopy={(e) => e.preventDefault()}
+                      onPaste={(e) => e.preventDefault()}
+                      onCut={(e) => e.preventDefault()}
                       placeholder="Min 12 chars, uppercase, lowercase, number, special"
                       className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition"
                     />
@@ -384,6 +306,9 @@ export default function ClientRegister() {
                       name="confirm_password"
                       value={formData.confirm_password}
                       onChange={handleInputChange}
+                      onCopy={(e) => e.preventDefault()}
+                      onPaste={(e) => e.preventDefault()}
+                      onCut={(e) => e.preventDefault()}
                       placeholder="Confirm your password"
                       className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition"
                     />
@@ -417,7 +342,7 @@ export default function ClientRegister() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={loading || !phoneValid || passwordStrength.score < 60 || formData.password !== formData.confirm_password}
+                  disabled={loading}
                   className="w-full mt-6 px-4 py-2 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
                 >
                   {loading ? 'Creating Account...' : 'Create Account'}
@@ -438,9 +363,9 @@ export default function ClientRegister() {
             </>
           ) : (
             <>
-              <h2 className="text-2xl font-bold text-white mb-2">Verify Your Account</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">Verify Your Email</h2>
               <p className="text-slate-400 text-sm mb-6">
-                We've sent verification codes to your email and phone number
+                We've sent a verification code to <strong className="text-white">{userEmail}</strong>
               </p>
 
               {error && (
@@ -461,34 +386,13 @@ export default function ClientRegister() {
                 {/* Email OTP */}
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Email Verification Code
+                    Verification Code
                   </label>
                   <input
                     type="text"
                     maxLength="6"
-                    value={otpData.email_otp}
-                    onChange={(e) => setOtpData(prev => ({
-                      ...prev,
-                      email_otp: e.target.value.replace(/\D/g, '')
-                    }))}
-                    placeholder="000000"
-                    className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition text-center text-2xl tracking-widest"
-                  />
-                </div>
-
-                {/* Phone OTP */}
-                <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Phone Verification Code
-                  </label>
-                  <input
-                    type="text"
-                    maxLength="6"
-                    value={otpData.phone_otp}
-                    onChange={(e) => setOtpData(prev => ({
-                      ...prev,
-                      phone_otp: e.target.value.replace(/\D/g, '')
-                    }))}
+                    value={emailOtp}
+                    onChange={(e) => setEmailOtp(e.target.value.replace(/\D/g, ''))}
                     placeholder="000000"
                     className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition text-center text-2xl tracking-widest"
                   />
@@ -497,10 +401,10 @@ export default function ClientRegister() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={otpLoading || otpData.email_otp.length !== 6 || otpData.phone_otp.length !== 6}
+                  disabled={otpLoading || emailOtp.length !== 6}
                   className="w-full mt-6 px-4 py-2 bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
                 >
-                  {otpLoading ? 'Verifying...' : 'Verify Account'}
+                  {otpLoading ? 'Verifying...' : 'Verify Email'}
                 </button>
               </form>
             </>

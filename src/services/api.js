@@ -91,13 +91,12 @@ class APIClient {
   // AUTHENTICATION
   // ─────────────────────────────────────────────────────────────────────────
 
-  async register(institutionName, email, phoneNumber, password, confirmPassword) {
+  async register(institutionName, email, password, confirmPassword) {
     return this.request('/auth/register', {
       method: 'POST',
       body: JSON.stringify({
         institution_name: institutionName,
         email,
-        phone_number: phoneNumber,
         password,
         confirm_password: confirmPassword
       })
@@ -168,19 +167,22 @@ class APIClient {
     });
   }
 
-  async validatePhone(phoneNumber) {
-    return this.request('/auth/validate-phone', {
-      method: 'POST',
-      body: JSON.stringify({ phone_number: phoneNumber })
-    });
-  }
-
   async getCurrentUser() {
     return this.request('/auth/me');
   }
 
   async logout() {
-    this.clearToken();
+    try {
+      // Call backend to invalidate session
+      await this.request('/auth/logout', {
+        method: 'POST'
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Still clear token even if backend call fails
+    } finally {
+      this.clearToken();
+    }
   }
 
   // ─────────────────────────────────────────────────────────────────────────

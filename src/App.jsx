@@ -16,6 +16,13 @@ import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 import ClientRegister from './pages/ClientRegister'
 import ClientLogin from './pages/ClientLogin'
+import ClientDashboard from './pages/ClientDashboard'
+import ClientTransactions from './pages/ClientTransactions'
+import ClientAnalytics from './pages/ClientAnalytics'
+import ClientSettings from './pages/ClientSettings'
+import ClientSecurity from './pages/ClientSecurity'
+import ClientBilling from './pages/ClientBilling'
+import ClientSupport from './pages/ClientSupport'
 import ForgotPassword from './pages/ForgotPassword'
 
 function Home() {
@@ -63,6 +70,13 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/register" element={<ClientRegister />} />
       <Route path="/login" element={<ClientLogin />} />
+      <Route path="/dashboard" element={<ClientDashboard />} />
+      <Route path="/transactions" element={<ClientTransactions />} />
+      <Route path="/analytics" element={<ClientAnalytics />} />
+      <Route path="/settings" element={<ClientSettings />} />
+      <Route path="/security" element={<ClientSecurity />} />
+      <Route path="/billing" element={<ClientBilling />} />
+      <Route path="/support" element={<ClientSupport />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/admin" element={<AdminLogin />} />
       <Route path="/docs" element={<Documentation />} />

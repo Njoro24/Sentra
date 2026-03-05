@@ -55,8 +55,8 @@ export default function Contact() {
               </div>
               <div>
                 <h3 className="text-lg font-bold text-white mb-1" style={{ fontFamily: 'Syne' }}>Email</h3>
-                <a href="mailto:meshacknjorogeg@gmail.com" className="text-white/70 hover:text-white transition-colors">
-                  meshacknjorogeg@gmail.com
+                <a href="mailto:support@sentra.io" className="text-white/70 hover:text-white transition-colors">
+                  support@sentra.io
                 </a>
               </div>
             </div>

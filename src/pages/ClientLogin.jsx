@@ -81,16 +81,16 @@ export default function ClientLogin() {
       )
 
       setEmail(loginData.email)
-      setClientId(response.data.client_id)
-      setOtpDeliveryMethods(response.data.otp_delivery_methods || ['sms', 'email'])
+      setClientId(response.client_id)
+      setOtpDeliveryMethods(response.otp_delivery_methods || ['sms', 'email'])
 
-      if (response.data.requires_otp) {
+      if (response.requires_otp) {
         setStep('otp')
-        setSuccess('OTP sent to your phone and email')
+        setSuccess('OTP sent to your email')
       } else {
         // Device is trusted, login successful
-        localStorage.setItem('access_token', response.data.access_token)
-        localStorage.setItem('token_type', response.data.token_type)
+        localStorage.setItem('access_token', response.access_token)
+        localStorage.setItem('token_type', response.token_type)
         setSuccess('Login successful!')
         setTimeout(() => {
           navigate('/dashboard')
@@ -131,8 +131,8 @@ export default function ClientLogin() {
       const response = await api.verifyOTP(clientId, otp, 'login')
 
       // Store tokens
-      localStorage.setItem('access_token', response.data.access_token)
-      localStorage.setItem('token_type', response.data.token_type)
+      localStorage.setItem('access_token', response.access_token)
+      localStorage.setItem('token_type', response.token_type)
 
       // Trust device if requested
       if (loginData.remember_device) {
@@ -144,6 +144,8 @@ export default function ClientLogin() {
       }
 
       setSuccess('Login successful!')
+      // Clear login form data
+      setLoginData({ email: '', password: '', remember_device: false, device_name: '' })
       setTimeout(() => {
         navigate('/dashboard')
       }, 1500)
@@ -299,7 +301,7 @@ export default function ClientLogin() {
             <>
               <h2 className="text-2xl font-bold text-white mb-2">Verify Your Identity</h2>
               <p className="text-slate-400 text-sm mb-6">
-                Enter the 6-digit code sent to your phone and email
+                Enter the 6-digit code sent to your email
               </p>
 
               {error && (
@@ -331,7 +333,7 @@ export default function ClientLogin() {
                     className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition text-center text-3xl tracking-widest font-mono"
                   />
                   <p className="text-xs text-slate-400 mt-2">
-                    Sent to {email} and your registered phone
+                    Sent to {email}
                   </p>
                 </div>
 
