@@ -113,6 +113,11 @@ export function LiveAlertsFeed() {
  * Individual alert card component
  */
 function AlertCard({ alert }) {
+  const [feedback, setFeedback] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [notes, setNotes] = useState('');
+  const [showNotes, setShowNotes] = useState(false);
+
   const getRiskColor = (score) => {
     if (score >= 70) return '#e8312a'; // Red
     if (score >= 40) return '#ff7a2a'; // Orange
@@ -126,6 +131,40 @@ function AlertCard({ alert }) {
       'APPROVE': { color: '#00c97a', label: 'APPROVE' }
     };
     return badges[recommendation] || badges['APPROVE'];
+  };
+
+  const handleFeedback = async (status) => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('access_token');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      
+      const response = await fetch(
+        `${apiUrl}/alerts/${alert.transaction_id}/feedback`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            marked_status: status,
+            analyst_notes: notes || null
+          })
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setFeedback(status);
+        setShowNotes(false);
+        setNotes('');
+      }
+    } catch (error) {
+      console.error('Error saving feedback:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const badge = getRecommendationBadge(alert.recommendation);
@@ -207,6 +246,58 @@ function AlertCard({ alert }) {
             </div>
           </div>
         )}
+
+        {/* Feedback Section */}
+        <div className="feedback-section">
+          {feedback ? (
+            <div className={`feedback-status feedback-${feedback}`}>
+              <span className="status-icon">✓</span>
+              <span className="status-text">Marked as {feedback.toUpperCase()}</span>
+            </div>
+          ) : (
+            <>
+              <div className="feedback-buttons">
+                <button
+                  className="btn-feedback btn-correct"
+                  onClick={() => handleFeedback('correct')}
+                  disabled={loading}
+                >
+                  ✓ Correct
+                </button>
+                <button
+                  className="btn-feedback btn-incorrect"
+                  onClick={() => handleFeedback('incorrect')}
+                  disabled={loading}
+                >
+                  ✗ Incorrect
+                </button>
+                <button
+                  className="btn-feedback btn-escalate"
+                  onClick={() => handleFeedback('escalate')}
+                  disabled={loading}
+                >
+                  ⚠ Escalate
+                </button>
+              </div>
+              <button
+                className="btn-notes"
+                onClick={() => setShowNotes(!showNotes)}
+              >
+                {showNotes ? 'Hide Notes' : 'Add Notes'}
+              </button>
+            </>
+          )}
+
+          {showNotes && !feedback && (
+            <textarea
+              className="notes-input"
+              placeholder="Add analyst notes..."
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              rows="2"
+            />
+          )}
+        </div>
       </div>
     </div>
   );
@@ -562,6 +653,139 @@ const styles = `
   color: #00d4ff;
   font-weight: 600;
   font-family: 'DM Mono', monospace;
+}
+
+.feedback-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 4px;
+}
+
+.feedback-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-feedback {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-correct {
+  background: rgba(0, 201, 122, 0.1);
+  border-color: #00c97a;
+  color: #00c97a;
+}
+
+.btn-correct:hover:not(:disabled) {
+  background: #00c97a;
+  color: #080c14;
+}
+
+.btn-incorrect {
+  background: rgba(232, 49, 42, 0.1);
+  border-color: #e8312a;
+  color: #e8312a;
+}
+
+.btn-incorrect:hover:not(:disabled) {
+  background: #e8312a;
+  color: #f0f4ff;
+}
+
+.btn-escalate {
+  background: rgba(255, 122, 42, 0.1);
+  border-color: #ff7a2a;
+  color: #ff7a2a;
+}
+
+.btn-escalate:hover:not(:disabled) {
+  background: #ff7a2a;
+  color: #080c14;
+}
+
+.btn-feedback:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-notes {
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid #4a5a7a;
+  color: #4a5a7a;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-notes:hover {
+  border-color: #00d4ff;
+  color: #00d4ff;
+}
+
+.notes-input {
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 4px;
+  color: #f0f4ff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  resize: vertical;
+}
+
+.notes-input::placeholder {
+  color: #4a5a7a;
+}
+
+.feedback-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.feedback-correct {
+  background: rgba(0, 201, 122, 0.1);
+  border: 1px solid rgba(0, 201, 122, 0.3);
+  color: #00c97a;
+}
+
+.feedback-incorrect {
+  background: rgba(232, 49, 42, 0.1);
+  border: 1px solid rgba(232, 49, 42, 0.3);
+  color: #e8312a;
+}
+
+.feedback-escalate {
+  background: rgba(255, 122, 42, 0.1);
+  border: 1px solid rgba(255, 122, 42, 0.3);
+  color: #ff7a2a;
+}
+
+.status-icon {
+  font-size: 14px;
 }
 
 .loading,

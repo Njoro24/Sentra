@@ -18,7 +18,8 @@ export default function AdminClientManagement() {
   const fetchClients = async () => {
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch('http://localhost:8000/api/admin/clients?page=1&limit=20', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+      const response = await fetch(`${apiUrl}/api/admin/clients?page=1&limit=20`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
@@ -57,6 +58,7 @@ export default function AdminClientManagement() {
     try {
       setActionLoading(true)
       const token = localStorage.getItem('admin_token')
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
       let endpoint = ''
       let method = 'POST'
       let body = { password }
@@ -67,14 +69,14 @@ export default function AdminClientManagement() {
           setActionLoading(false)
           return
         }
-        endpoint = `http://localhost:8000/api/admin/clients/${selectedClient.id}/tier`
+        endpoint = `${apiUrl}/api/admin/clients/${selectedClient.id}/tier`
         method = 'PUT'
         body.tier = newTier
       } else if (modalType === 'suspend') {
-        endpoint = `http://localhost:8000/api/admin/clients/${selectedClient.id}/suspend`
+        endpoint = `${apiUrl}/api/admin/clients/${selectedClient.id}/suspend`
         body.reason = 'Suspended by admin'
       } else if (modalType === 'reset') {
-        endpoint = `http://localhost:8000/api/admin/clients/${selectedClient.id}/reset-key`
+        endpoint = `${apiUrl}/api/admin/clients/${selectedClient.id}/reset-key`
       }
 
       const response = await fetch(endpoint, {

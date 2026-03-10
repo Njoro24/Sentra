@@ -23,7 +23,8 @@ export default function AdminSettings() {
     try {
       setLoading(true)
       const token = localStorage.getItem('admin_token')
-      const response = await fetch('http://localhost:8000/api/admin/settings', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+      const response = await fetch(`${apiUrl}/api/admin/settings`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
@@ -50,7 +51,8 @@ export default function AdminSettings() {
   const handleSaveSettings = async () => {
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch('http://localhost:8000/api/admin/settings', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+      const response = await fetch(`${apiUrl}/api/admin/settings`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -22,9 +22,10 @@ export default function AdminDailyMetrics() {
     try {
       setLoading(true)
       const token = localStorage.getItem('admin_token')
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
       
       // Fetch daily metrics
-      const dailyResponse = await fetch('http://localhost:8000/api/admin/metrics/daily', {
+      const dailyResponse = await fetch(`${apiUrl}/api/admin/metrics/daily`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
@@ -40,7 +41,7 @@ export default function AdminDailyMetrics() {
       }
       
       // Fetch historical metrics
-      const historicalResponse = await fetch('http://localhost:8000/api/admin/metrics/historical?days=30', {
+      const historicalResponse = await fetch(`${apiUrl}/api/admin/metrics/historical?days=30`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       

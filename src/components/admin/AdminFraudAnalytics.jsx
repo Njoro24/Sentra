@@ -23,9 +23,10 @@ export default function AdminFraudAnalytics() {
     try {
       setLoading(true)
       const token = localStorage.getItem('admin_token')
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
       
       // Fetch fraud stats
-      const statsResponse = await fetch('http://localhost:8000/api/admin/fraud/stats', {
+      const statsResponse = await fetch(`${apiUrl}/api/admin/fraud/stats`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
@@ -40,7 +41,7 @@ export default function AdminFraudAnalytics() {
       }
       
       // Fetch fraud by client
-      const clientResponse = await fetch('http://localhost:8000/api/admin/fraud/by-client', {
+      const clientResponse = await fetch(`${apiUrl}/api/admin/fraud/by-client`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
@@ -50,7 +51,7 @@ export default function AdminFraudAnalytics() {
       }
       
       // Fetch fraud by country
-      const countryResponse = await fetch('http://localhost:8000/api/admin/fraud/by-country', {
+      const countryResponse = await fetch(`${apiUrl}/api/admin/fraud/by-country`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
@@ -60,7 +61,7 @@ export default function AdminFraudAnalytics() {
       }
       
       // Fetch fraud patterns
-      const patternsResponse = await fetch('http://localhost:8000/api/admin/fraud/patterns', {
+      const patternsResponse = await fetch(`${apiUrl}/api/admin/fraud/patterns`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       

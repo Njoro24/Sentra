@@ -4,6 +4,7 @@ import { AlertCircle, TrendingUp, Activity, BarChart3, Zap, CheckCircle } from '
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import { api } from '../services/api'
 import ClientLayout from '../components/ClientLayout'
+import FeedbackSummary from '../components/FeedbackSummary'
 
 export default function ClientDashboard() {
   const navigate = useNavigate()
@@ -238,58 +239,9 @@ export default function ClientDashboard() {
         </ResponsiveContainer>
       </div>
 
-      {/* Recent Transactions */}
-      <div className="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
-        <div className="px-6 py-4 border-b border-white/10">
-          <h2 className="text-lg font-bold text-white">Latest Transactions</h2>
-        </div>
-
-        {feed.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-white/5">
-                <tr>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">Transaction ID</th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">Amount</th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">Risk</th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">Status</th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">Time</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/10">
-                {feed.slice(0, 10).map((txn) => (
-                  <tr key={txn.transaction_id} className="hover:bg-white/5 transition">
-                    <td className="px-6 py-4 text-sm text-slate-300 font-mono">{txn.transaction_id}</td>
-                    <td className="px-6 py-4 text-sm text-slate-300">KES {(txn.amount || 0).toLocaleString()}</td>
-                    <td className="px-6 py-4 text-sm">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        txn.risk_level === 'HIGH' ? 'bg-red-500/20 text-red-300' :
-                        txn.risk_level === 'MEDIUM' ? 'bg-yellow-500/20 text-yellow-300' :
-                        'bg-green-500/20 text-green-300'
-                      }`}>
-                        {txn.risk_level || 'UNKNOWN'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-sm">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        txn.recommendation === 'BLOCK' ? 'bg-red-500/20 text-red-300' :
-                        txn.recommendation === 'FLAG' ? 'bg-yellow-500/20 text-yellow-300' :
-                        'bg-green-500/20 text-green-300'
-                      }`}>
-                        {txn.recommendation === 'BLOCK' ? 'Blocked' : txn.recommendation === 'FLAG' ? 'Flagged' : 'Approved'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-slate-400">Just now</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="px-6 py-12 text-center">
-            <p className="text-slate-400">No transactions yet</p>
-          </div>
-        )}
+      {/* Feedback Summary */}
+      <div className="mt-8">
+        <FeedbackSummary />
       </div>
     </ClientLayout>
   )

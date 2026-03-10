@@ -17,7 +17,8 @@ export default function AdminRealTimeMonitoring() {
     try {
       setLoading(true)
       const token = localStorage.getItem('admin_token')
-      const response = await fetch('http://localhost:8000/api/admin/transactions?page=1&limit=50', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+      const response = await fetch(`${apiUrl}/api/admin/transactions?page=1&limit=50`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
@@ -37,7 +38,8 @@ export default function AdminRealTimeMonitoring() {
     try {
       setActionLoading(true)
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`http://localhost:8000/api/admin/transactions/${txId}/false-positive`, {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+      const response = await fetch(`${apiUrl}/api/admin/transactions/${txId}/false-positive`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -63,7 +65,8 @@ export default function AdminRealTimeMonitoring() {
     try {
       setActionLoading(true)
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`http://localhost:8000/api/admin/transactions/${txId}/override`, {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+      const response = await fetch(`${apiUrl}/api/admin/transactions/${txId}/override`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

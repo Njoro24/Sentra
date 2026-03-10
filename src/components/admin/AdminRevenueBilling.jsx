@@ -19,9 +19,10 @@ export default function AdminRevenueBilling() {
     try {
       setLoading(true)
       const token = localStorage.getItem('admin_token')
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
       
       // Fetch revenue summary
-      const summaryResponse = await fetch('http://localhost:8000/api/admin/revenue/summary', {
+      const summaryResponse = await fetch(`${apiUrl}/api/admin/revenue/summary`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
@@ -36,7 +37,7 @@ export default function AdminRevenueBilling() {
       }
       
       // Fetch invoices
-      const invoicesResponse = await fetch('http://localhost:8000/api/admin/revenue/invoices?page=1&limit=20', {
+      const invoicesResponse = await fetch(`${apiUrl}/api/admin/revenue/invoices?page=1&limit=20`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
