@@ -1,4 +1,4 @@
-# 🎨 Sentra Dashboard - Real-Time Fraud Detection UI
+# Sentra Dashboard - Real-Time Fraud Detection UI
 
 > Modern, responsive web dashboard for real-time fraud detection and analytics
 
@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Features](#features)
@@ -22,7 +22,7 @@
 
 ---
 
-## 🎯 Overview
+## Overview
 
 Sentra Dashboard is a modern, real-time web application for monitoring and managing fraud detection operations. Built with React and Vite, it provides:
 
@@ -34,19 +34,19 @@ Sentra Dashboard is a modern, real-time web application for monitoring and manag
 - **Dark Mode Support**: Eye-friendly interface
 
 ### Key Capabilities
-✅ Real-time fraud alerts via WebSocket  
-✅ Interactive analytics and reporting  
-✅ Multi-role access (Admin, Analyst, Client)  
-✅ Transaction history and search  
-✅ Fraud ring visualization  
-✅ Subscription management  
-✅ OTP-based authentication  
+- Real-time fraud alerts via WebSocket
+- Interactive analytics and reporting
+- Multi-role access (Admin, Analyst, Client)
+- Transaction history and search
+- Fraud ring visualization
+- Subscription management
+- OTP-based authentication  
 
 ---
 
-## ✨ Features
+## Features
 
-### 👨‍💼 Admin Dashboard
+### Admin Dashboard
 - **System Health**: Real-time system metrics
 - **Daily Metrics**: Transaction volume, fraud rate, processing time
 - **Fraud Analytics**: Risk distribution, top merchants, patterns
@@ -56,7 +56,7 @@ Sentra Dashboard is a modern, real-time web application for monitoring and manag
 - **System Settings**: Configuration management
 - **Support Tickets**: Customer support management
 
-### 👤 Client Portal
+### Client Portal
 - **Dashboard**: Personal fraud metrics
 - **Transactions**: View and filter transaction history
 - **Analytics**: Fraud patterns specific to account
@@ -65,19 +65,19 @@ Sentra Dashboard is a modern, real-time web application for monitoring and manag
 - **Security**: Account settings and security options
 - **Support**: Help and support tickets
 
-### 🔐 Authentication
+### Authentication
 - **OTP Login**: Email/SMS-based one-time passwords
 - **JWT Tokens**: Secure session management
 - **Role-Based Access**: Admin, Analyst, Client roles
 - **Session Management**: Auto-logout on inactivity
 
-### 📊 Real-Time Features
+### Real-Time Features
 - **WebSocket Connection**: Live data streaming
 - **Live Alerts Feed**: Real-time fraud notifications
 - **Auto-refresh**: Automatic dashboard updates
 - **Push Notifications**: Browser notifications for alerts
 
-### 🎨 UI/UX
+### UI/UX
 - **Modern Design**: Clean, professional interface
 - **Dark Mode**: Eye-friendly dark theme
 - **Responsive Layout**: Mobile-first design
@@ -87,7 +87,7 @@ Sentra Dashboard is a modern, real-time web application for monitoring and manag
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### Component Hierarchy
 
@@ -252,7 +252,7 @@ Sentra Dashboard is a modern, real-time web application for monitoring and manag
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js 16+ and npm/yarn
@@ -301,7 +301,7 @@ npm run preview
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 SentraFE/
@@ -377,7 +377,7 @@ SentraFE/
 
 ---
 
-## 🧩 Components
+## Components
 
 ### Admin Components
 
@@ -475,7 +475,7 @@ Animated loading spinner.
 
 ---
 
-## 🧪 Development
+## Development
 
 ### Code Style
 
@@ -507,7 +507,7 @@ The app will be available at `http://localhost:5173` with hot module replacement
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -544,7 +544,7 @@ module.exports = {
 
 ---
 
-## 📦 Deployment
+## Deployment
 
 ### Build for Production
 
@@ -588,7 +588,7 @@ VITE_ENABLE_ANALYTICS=true
 
 ---
 
-## 🔐 Security
+## Security
 
 ### JWT Token Management
 
@@ -615,7 +615,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'
 
 ---
 
-## 🚀 Performance
+## Performance
 
 ### Optimization Techniques
 
@@ -634,7 +634,7 @@ Target metrics:
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -644,13 +644,13 @@ Target metrics:
 
 ---
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📞 Support
+## Support
 
 - **Documentation**: [Full Docs](./docs)
 - **Issues**: [GitHub Issues](https://github.com/yourusername/sentra/issues)
@@ -659,7 +659,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - React team for the amazing framework
 - Vite for lightning-fast development
@@ -668,6 +668,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Made with ❤️ by the Sentra Team**
+**Made by the Sentra Team**
 
 Last Updated: March 2024 | Version: 1.0.0
