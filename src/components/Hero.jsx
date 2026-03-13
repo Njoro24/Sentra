@@ -83,28 +83,40 @@ function Hero() {
                     <Lock size={20} className="text-green-400" />
                   </div>
 
-                  {/* Transaction items */}
-                  <div className="space-y-4">
-                    {[
-                      { amount: 'KES 150,000', status: 'HIGH RISK', color: 'text-red-400', icon: '⚠️' },
-                      { amount: 'KES 5,000', status: 'LOW RISK', color: 'text-green-400', icon: '✓' },
-                      { amount: 'KES 45,000', status: 'FLAGGED', color: 'text-yellow-400', icon: '!' },
-                    ].map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center justify-between p-3 bg-white/10 rounded-lg border border-white/20 hover:border-white hover:bg-white/20 transition-all group/item cursor-default"
-                        style={{ animationDelay: `${0.5 + idx * 0.1}s` }}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="text-lg group-hover/item:scale-125 transition-transform">{item.icon}</span>
-                          <div>
-                            <div className="text-sm font-semibold text-white">{item.amount}</div>
-                            <div className={`text-xs ${item.color}`}>{item.status}</div>
-                          </div>
+                  {/* Live metrics */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-white/10 rounded-lg border border-white/20 hover:border-white hover:bg-white/20 transition-all group/item cursor-default">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <div>
+                          <div className="text-xs text-white/70">Transactions Processed</div>
+                          <div className="text-sm font-semibold text-white">2,847 today</div>
                         </div>
-                        <Zap size={16} className="text-white opacity-0 group-hover/item:opacity-100 transition-opacity" />
                       </div>
-                    ))}
+                      <Zap size={16} className="text-green-400" />
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 bg-white/10 rounded-lg border border-white/20 hover:border-white hover:bg-white/20 transition-all group/item cursor-default">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+                        <div>
+                          <div className="text-xs text-white/70">Fraud Detected</div>
+                          <div className="text-sm font-semibold text-white">23 blocked</div>
+                        </div>
+                      </div>
+                      <Shield size={16} className="text-red-400" />
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 bg-white/10 rounded-lg border border-white/20 hover:border-white hover:bg-white/20 transition-all group/item cursor-default">
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                        <div>
+                          <div className="text-xs text-white/70">Detection Accuracy</div>
+                          <div className="text-sm font-semibold text-white">97.3%</div>
+                        </div>
+                      </div>
+                      <Zap size={16} className="text-blue-400" />
+                    </div>
                   </div>
 
                   {/* Footer */}
